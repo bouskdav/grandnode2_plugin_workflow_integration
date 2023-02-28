@@ -1,0 +1,61 @@
+﻿@model InvoiceSeriesModel
+@*<script>
+        $(document).ready(function () {
+            $("#@Html.IdFor(model => model.SliderTypeId)").change(toggleSliderType);
+            toggleSliderType();
+        });
+        function toggleSliderType() {
+            var sliderTypeId = $("#@Html.IdFor(model => model.SliderTypeId)").val();
+            if (sliderTypeId == @(((int)SliderType.HomePage).ToString())) {
+                $('#pnlCategory').hide();
+                $('#pnlCollection').hide();
+                $('#pnlBrand').hide();
+            } else if (sliderTypeId == @(((int)SliderType.Category).ToString())) {
+                $('#pnlCategory').show();
+                $('#pnlCollection').hide();
+                $('#pnlBrand').hide();
+            }else if (sliderTypeId == @(((int)SliderType.Collection).ToString())) {
+                $('#pnlCategory').hide();
+                $('#pnlCollection').show();
+                $('#pnlBrand').hide();
+            }
+            else if (sliderTypeId == @(((int)SliderType.Brand).ToString())) {
+                $('#pnlCategory').hide();
+                $('#pnlCollection').hide();
+                $('#pnlBrand').show();
+            }
+        }
+</script>*@
+
+<div class="form-horizontal">
+    <div class="form-body">
+        <div class="form-group">
+            <admin-label asp-for="From" />
+            <div class="col-md-9 col-sm-9">
+                <admin-input asp-for="From" />
+                <span asp-validation-for="From"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <admin-label asp-for="NextNumber" />
+            <div class="col-md-9 col-sm-9">
+                <admin-input asp-for="NextNumber" />
+                <span asp-validation-for="NextNumber"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <admin-label asp-for="Pattern" />
+            <div class="col-md-9 col-sm-9">
+                <admin-input asp-for="Pattern" />
+                <span asp-validation-for="Pattern"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <admin-label asp-for="Stores" />
+            <div class="col-md-9 col-sm-9">
+                <admin-input asp-for="Stores" />
+                <span asp-validation-for="Stores"></span>
+            </div>
+        </div>
+    </div>
+</div>

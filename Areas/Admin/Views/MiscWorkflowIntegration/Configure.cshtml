@@ -1,0 +1,122 @@
+﻿@model ConfigurationModel
+@inject AdminAreaSettings adminAreaSettings
+@{
+    Layout = "_ConfigurePlugin";
+}
+@{
+    //page title
+    ViewBag.Title = Loc["Misc.WorkflowIntegration.Manage"];
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_panel light form-fit">
+            <div class="x_title">
+                <div class="caption">
+                    <i class="fa fa-sitemap"></i>
+                    @Loc["Misc.WorkflowIntegration.Manage"]
+                </div>
+                <div class="actions btn-group btn-group-devided util-btn-margin-bottom-5">
+                    <a href="@Url.Action("Create", "MiscWorkflowIntegration")" class="btn green"><i class="fa fa-plus"></i><span class="hidden-xs"> @Loc["Admin.Common.AddNew"] </span></a>
+                </div>
+            </div>
+            <div class="x_content">
+                <div id="slider-grid"></div>
+            </div>
+            <div class="x_content form">
+                <partial name="_Settings.cshtml" model="Model"/>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#slider-grid').kendoGrid({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: '@Html.Raw(Url.Action("List", "MiscWorkflowIntegration"))',
+                        type: 'POST',
+                        dataType: 'json'
+                    },
+                    destroy: {
+                        url: '@Html.Raw(Url.Action("Delete", "MiscWorkflowIntegration"))',
+                        type: 'POST',
+                        dataType: 'json',
+                    },
+                    //edit: {
+                    //    url: '@Html.Raw(Url.Action("Edit", "MiscWorkflowIntegration"))',
+                    //    type: 'POST',
+                    //    dataType: 'json',
+                    //},
+                    //parameterMap: function (options, operation) {
+                    //    console.log(options);
+                    //    console.log(operation);
+                    //    if (operation == 'edit') {
+                    //        return JSON.stringify(options);
+                    //    }
+                    //    //if (operation == "destroy") {
+                    //    //    return JSON.stringify(options);
+                    //    //}
+                    //}
+                },
+                schema: {
+                    data: 'Data',
+                    total: 'Total',
+                    errors: 'Errors',
+                    model: {
+                        id: 'Id',
+                        //fields: {
+                        //    Id: { editable: false },
+                        //    From: { nullable: false },
+                        //    NextNumber: { nullable: false },
+                        //    Pattern: { nullable: false }
+                        //}
+                    }
+                },
+                error: function(e) {
+                    display_kendoui_grid_error(e);
+                    // Cancel the changes
+                    this.cancelChanges();
+                },
+                pageSize: @(adminAreaSettings.DefaultGridPageSize),
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            },
+            pageable: {
+                refresh: true,
+                pageSizes: [@(adminAreaSettings.GridPageSizes)]
+            },
+            editable: {
+                confirmation: true,
+                mode: 'inline'
+            },
+            scrollable: false,
+            columns: [
+                {
+                    field: 'From',
+                    title: '@Loc["Misc.WorkflowIntegration.Fields.From"]',
+                    width: 150,
+                    template: '<a class="k-link" href="Edit/#=Id#">#=From#</a>'
+                }, {
+                    field: 'NextNumber',
+                    title: '@Loc["Misc.WorkflowIntegration.Fields.NextNumber"]',
+                    width: 150
+                }, {
+                    field: 'Pattern',
+                    title: '@Loc["Misc.WorkflowIntegration.Fields.Pattern"]',
+                    width: 100
+                }, {
+                    command: [
+                        {
+                            name: 'destroy',
+                            text: '@Loc["Admin.Common.Delete"]'
+                        },
+                    ],
+                    width: 200
+                }
+            ]});
+    });
+</script>
+
