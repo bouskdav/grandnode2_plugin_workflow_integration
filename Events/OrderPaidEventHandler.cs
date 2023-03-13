@@ -28,21 +28,21 @@ namespace Misc.WorkflowIntegration.Events
 
         public async Task Handle(OrderPaidEvent notification, CancellationToken cancellationToken)
         {
-            DateTime invoiceEffectiveDate = DateTime.Today;
+            //DateTime invoiceEffectiveDate = DateTime.Today;
 
-            bool isServiceAvailableForStore = await _invoiceSeriesService.IsServiceAvailableForStore(notification.Order.StoreId, invoiceEffectiveDate);
+            //bool isServiceAvailableForStore = await _invoiceSeriesService.IsServiceAvailableForStore(notification.Order.StoreId, invoiceEffectiveDate);
 
-            if (!isServiceAvailableForStore)
-                return;
+            //if (!isServiceAvailableForStore)
+            //    return;
 
-            // check, if order already have invoice record
-            var invoiceNumber = await _userFieldService.GetFieldsForEntity<string>(notification.Order, InvoiceConstants.INVOICE_NUMBER_FIELD_KEY);
+            //// check, if order already have invoice record
+            //var invoiceNumber = await _userFieldService.GetFieldsForEntity<string>(notification.Order, InvoiceConstants.INVOICE_NUMBER_FIELD_KEY);
 
-            // skip
-            if (!String.IsNullOrEmpty(invoiceNumber))
-                return;
+            //// skip
+            //if (!String.IsNullOrEmpty(invoiceNumber))
+            //    return;
 
-            _ = await _invoiceSeriesService.SetNextAvailableNumberForOrder(notification.Order, invoiceEffectiveDate);
+            //_ = await _invoiceSeriesService.SetNextAvailableNumberForOrder(notification.Order, invoiceEffectiveDate);
         }
     }
 }
